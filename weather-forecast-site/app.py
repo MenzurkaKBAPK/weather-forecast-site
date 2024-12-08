@@ -3,7 +3,6 @@ import sys
 
 from flask import (
     Flask,
-    redirect,
     render_template,
     request
 )
@@ -34,7 +33,7 @@ def index():
             weather_from=from_["data"],
             weather_to=to_["data"],
             good_from=from_["good"],
-            good_to=to_["good"]
+            good_to=to_["good"],
         )
 
     return render_template("index.html")

@@ -3,22 +3,15 @@ from pprint import pprint
 
 
 def main():
-    files = [
-        "answer.json",
-        "location.json"
-    ]
+    files = ["answer.json", "location.json"]
 
     for filename in files:
         with open(filename, "r", encoding="utf-8") as file:
             data = eval(
-                file.read(
-                    ).replace(
-                        "true", "True"
-                    ).replace(
-                        "false", "False"
-                    ).replace(
-                        "null", "None"
-                    )
+                file.read()
+                .replace("true", "True")
+                .replace("false", "False")
+                .replace("null", "None")
             )
         pprint(data)
         with open(filename, "w", encoding="utf-8") as file:
