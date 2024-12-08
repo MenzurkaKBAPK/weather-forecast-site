@@ -34,6 +34,8 @@ def index():
             weather_to=to_["data"],
             good_from=from_["good"],
             good_to=to_["good"],
+            errors_from=from_["errors"],
+            errors_to=to_["errors"],
         )
 
     return render_template("index.html")
