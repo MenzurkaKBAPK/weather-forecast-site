@@ -18,12 +18,14 @@ def get_location(location):
             "language": "ru-ru",
             "details": "true"
         }
-    ).json()
+    )
 
-    if response:
-        return (
-            response[0]["Key"], response[0]["LocalizedName"]
-        )
+    if response.status_code == 200:
+        data = response.json()
+        if data:
+            return (
+                data[0]["Key"], data[0]["LocalizedName"]
+            )
 
 
 def get_weather_by_location(location_key):
@@ -38,7 +40,7 @@ def get_weather_by_location(location_key):
         }
     )
 
-    if response:
+    if response.status_code == 200:
         data = response.json()
 
         temperature = (
@@ -56,7 +58,7 @@ def get_weather_by_location(location_key):
 
         weather_data = {
             "temperature": ("Температура (°C)", temperature),
-            "humidty": ("Влажность (%)", humidity),
+            "humidity": ("Влажность (%)", humidity),
             "wind_speed": ("Скорость ветра (км/ч)", wind_speed),
             "rain_prob": ("Вероятность дождя (%)", rain_probability)
         }

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Погода на маршруте</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Погода на маршруте</h1>
+        <div class="row">
+            <div class="col-md-6">
+                <h2>{{ from_ }}</h2>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Погодные условия</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for key, value in weather_from.items() %}
+                        <tr>
+                            <td>{{ key }}: {{ value }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-md-6">
+                <h2>{{ to_ }}</h2>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Погодные условия</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for key, value in weather_to.items() %}
+                        <tr>
+                            <td>{{ key }}: {{ value }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            {% if good_from and good_to %}
+                <p>Хорошая погода в обоих городах!</p>
+            {% elif good_from and not good_to %}
+                <p>Хорошая погода в городе {{ from_ }}, но плохая погода в городе {{ to_ }}.</p>
+            {% elif not good_from and good_to %}
+                <p>Плохая погода в городе {{ from_ }}, но хорошая погода в городе {{ to_ }}.</p>
+            {% else %}
+                <p>Плохая погода в обоих городах.</p>
+            {% endif %}
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="/" class="btn btn-primary">Вернуться</a>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,23 +1,43 @@
+import os
+import sys
+
 from flask import (
-    Flask
+    Flask,
+    redirect,
+    render_template,
+    request
 )
 
-from api_requests.main import (
-    get_location,
-    get_weather_by_location
-)
+sys.path.append(os.getcwd())
 from config import DEBUG
-from methods import check_weather
+from methods import get_weather
 
 
 app: Flask = Flask(__name__)
 
 
-@app.route("/")
-@app.route("/index")
-@app.route("/index.html")
+@app.route("/", methods=["GET", "POST"])
+@app.route("/index", methods=["GET", "POST"])
+@app.route("/index.html", methods=["GET", "POST"])
 def index():
-    return "Base page <3"
+    if request.method == "POST":
+        from_ = request.form.get("from")
+        to_ = request.form.get("to")
+
+        from_ = get_weather(from_, get_cached=DEBUG)
+        to_ = get_weather(to_, get_cached=DEBUG)
+
+        return render_template(
+            "weather.html",
+            from_=from_["name"],
+            to_=to_["name"],
+            weather_from=from_["data"],
+            weather_to=to_["data"],
+            good_from=from_["good"],
+            good_to=to_["good"]
+        )
+
+    return render_template("index.html")
 
 
 if __name__ == "__main__":
